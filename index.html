@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="SimMark">
+  <meta name="keywords" content="LLM Watermark">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SimMark</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon"  type="image/png" href="static/images/icon.png">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+  <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.16.0/gradio.js"></script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+</head>
+
+<style>
+  .expandable-card .card-text-container {
+    max-height: 200px;
+    overflow-y: hidden;
+    position: relative;
+  }
+
+  .expandable-card.expanded .card-text-container {
+    max-height: none;
+  }
+
+  .expand-btn {
+    position: relative;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #510c75;
+    border-color: transparent;
+  }
+
+  .expand-btn:hover {
+    background-color: rgba(200, 200, 200, 0.8);
+    text-decoration: none;
+    border-color: transparent;
+    color: #510c75;
+  }
+
+  .expand-btn:focus {
+    outline: none;
+    text-decoration: none;
+  }
+
+  .expandable-card:not(.expanded) .card-text-container:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 1));
+  }
+
+  .expandable-card:not(.expanded) .expand-btn {
+    margin-top: -40px;
+  }
+
+  .card-body {
+    padding-bottom: 5px;
+  }
+
+  .vertical-flex-layout {
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .figure-img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .adjustable-font-size {
+    font-size: calc(0.5rem + 2vw);
+  }
+
+  .chat-history {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  #gradio pre {
+    background-color: transparent;
+  }
+
+  figure {
+            display: block;
+            text-align: center; /* Centers the figure */
+            margin: 20px auto;
+        }
+        figcaption {
+            text-align: left;
+            font-style: italic;
+        }
+        
+ .valid { color: ForestGreen; font-weight: bold; }
+ .invalid { color: Red; font-weight: bold; }
+</style>
+
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title"><i><b>SimMark</b></i>: A Robust Sentence-Level <br> Similarity-Based Watermarking Algorithm for Large Language Models</h1>
+            <div class="is-size-5 publication-authors">
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                        <a href="https://Dabiriaghdam.ir/" style="color:#008AD7;font-weight:normal;">Amirhossein Dabiriaghdam</a>,
+                    </span>
+                    <span class="author-block">
+                        <a href="https://ece.ubc.ca/lele-wang/" style="color:#008AD7;font-weight:normal;">Lele Wang</a>
+                    </span>         
+                </div>
+                <div class="is-size-5 publication-authors">
+                    <span class="author-block"><b style="color:#008AD7; font-weight:normal">&#x25B6 </b>Department of ECE, University of British Columbia, Vancouver, BC, Canada</span>
+                </div>
+                <div class="column has-text-centered">
+                    <div class="publication-links">
+                <span class="link-block">
+                    <a href="?" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                </span>
+                <span class="link-block">
+                    <a href="?"
+                       class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                          <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                <span class="link-block">
+                    <a href="https://github.com/DabiriAghdam/SimMark" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="background-color:#efeff081">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3" style="text-align: center;"></h2>
+      <!-- Abstract -->
+      <div class="columns is-centered has-text-centered">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-six-fifths">
+            <h2 class="title is-3">Abstract</h2>
+              <div class="content has-text-justified">
+                <p>
+                The rapid proliferation of large language models (LLMs) has created an urgent need for reliable methods to detect whether a text is generated by such models. 
+                In this paper, we propose <i><b>SimMark</b></i>, a posthoc watermarking algorithm that makes LLMs' outputs traceable without requiring access to the model's internal logits, enabling compatibility with a wide range of LLMs, including API-only models.
+                By leveraging the similarity of semantic sentence embeddings and rejection sampling to impose detectable statistical patterns imperceptible to humans, and employing a <i>soft</i> counting mechanism, <i>SimMark</i> achieves robustness against paraphrasing attacks.
+                Experimental results demonstrate that <i>SimMark</i> sets a new benchmark for robust watermarking of LLM-generated content, surpassing prior sentence-level watermarking techniques in robustness, sampling efficiency, and applicability across diverse domains, all while preserving the text quality.
+                </p>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Image -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-six-fifths">
+            <figure>
+                <img src="static/images/Teaser.png" alt="Teaser Image" style="width: 67%;">
+                <figcaption class="has-text-justified">
+                    <b>Figure 1:</b> The input text is divided into individual sentences \( X_1 \) to \( X_N \), which are embedded using a semantic embedding model, with optional PCA for dimensionality reduction.  
+                    The similarity between consecutive sentence embeddings is computed. Sentences with similarities within a predefined interval \( [a, b] \) are considered 
+                    <span style="color:ForestGreen; font-weight:bold;">valid</span>, while those outside are 
+                    <span style="color:BrickRed; font-weight:bold;">invalid</span>.  
+                    A <i>soft</i>-\( z \)-test is performed using the <i>soft</i> count of 
+                    <span style="color:BrickRed;">invalid/partially-valid</span> sentences to determine whether the text is watermarked.
+                </figcaption>
+            </figure>
+            
+            <h2 class="title is-3">Overview of <i>SimMark</i>: A Similarity-Based Watermark</h2>
+            <figure>
+                <img src="static/images/SimMark.png" alt="SimMark Image">
+                <figcaption class="has-text-justified">
+                    <b>Figure 2:</b> <b>Top: Generation.</b>  
+                    For each newly generated sentence \( X_{i+1} \), its embedding \( e_{i+1} \) is computed using the Instructor-Large model, optionally applying PCA for dimensionality reduction.  
+                    The cosine similarity (or Euclidean distance) between \( e_{i+1} \) and the embedding of the previous sentence \( e_i \), denoted as \( s_{i+1} \), is calculated. If \( s_{i+1} \) lies within the predefined interval \( [a, b] \), the sentence is marked 
+                    <span class="valid">valid</span> and accepted.  
+                    Otherwise, rejection sampling generates a new candidate sentence until validity is achieved or the iteration limit is reached. Once a sentence is accepted, the process repeats for subsequent sentences.  
+                    <b>Bottom: Detection (+ Paraphrase attack).</b>  
+                    Paraphrased versions of watermarked sentences are generated (\( Y_{i} \)), and their embeddings (\( e'_{i} \)) are computed. The similarity (or distance) between consecutive sentences in the paraphrased text is evaluated.  
+                    If paraphrasing causes the similarity (\( s'_{i+1} \)) to fall outside \( [a, b] \), it is mismarked as <span class="invalid">invalid</span>.  
+                    A <i>soft counting</i> mechanism (via function \( c(s_{i+1}) \) instead of a regular counting with a step function in the interval \( [a, b] \)) quantifies partial validity based on proximity to the interval bounds, enabling detection of watermarked text via the 
+                    <b>soft</b>-\( z \)-test even under paraphrase attacks.  
+                    It should be emphasized that soft counting is always applied during detection, regardless of whether paraphrasing is present or not, as we cannot assume prior knowledge of paraphrasing.
+                </figcaption>
+            </figure>
+
+            <h2 class="title is-3">Performance</h2>
+            <figure>
+                <img src="static/images/Performance.png" alt="SimMark Image">
+                <figcaption class="has-text-justified">
+                    <b>Table 1:</b> Performance of different algorithms across datasets and paraphrasers, evaluated using 
+                        <b>ROC-AUC↑</b>, <b>TP@FP=1%↑</b>, and <b>TP@FP=5%↑</b>, respectively, reported from left to right. Higher values indicate better performance across all metrics.
+                        In each column, <b>bold</b> values indicate the best performance for a given dataset and metric, while <u>underlined</u> values denote the second-best. 
+                        <i>SimMark</i> consistently outperforms or is on par with other state-of-the-art methods across datasets and paraphrasers, and it is the best on average.
+                    </p>
+                </figcaption>
+            </figure>
+
+            <h2 class="title is-3">Examples of Watermarked Text</h2>
+            <figure>
+                <img src="static/images/Example1.png" alt="Teaser Image">
+                <figcaption class="has-text-justified">
+                    <b>Figure 3:</b> Example of text generated with and without cosine-<i>SimMark</i> using the BookSum dataset.
+                    The first sentence (in black) is the prompt for the model, the <span class="valid">green</span> sentences are 
+                    <span class="valid">valid</span>, and <span class="invalid">red</span> sentences are 
+                    <span class="invalid">invalid/partially valid</span>.
+                    Numbers in parentheses represent the <i>soft count</i> for partially valid sentences.  
+                    The top panel shows the non-watermarked text, which fails to produce a significant detection signal (`z_{\text{soft}} = 0.14 \color{Red}{<} 5.033`, false negative).
+                    The middle panel demonstrates text generated using <i>SimMark</i> with cosine similarity-based watermarking, producing a strong detection signal `(z_{\text{soft}} = 9.48 \color{ForestGreen}{>} 5.033)`.
+                    The bottom panel shows paraphrased watermarked text using GPT-3.5-Turbo, where the embedded watermark remains detectable despite semantic alterations  `(z_{\text{soft}} = 6.94 \color{ForestGreen}{>} 5.033)`.
+                </figcaption>
+            </figure>
+            <figure>
+                <img src="static/images/Example2.png" alt="Teaser Image">
+                <figcaption class="has-text-justified">
+                    <b>Figure 4:</b> Example of text generated with and without Euclidean-<i>SimMark</i> using the BookSum dataset.
+                    The first sentence (in black) is the prompt for the model, the <span class="valid">green</span> sentences are 
+                    <span class="valid">valid</span>, and <span class="invalid">red</span> sentences are 
+                    <span class="invalid">invalid/partially valid</span>.
+                    Numbers in parentheses represent the <i>soft count</i> for partially valid sentences.  
+                    The top panel shows the non-watermarked text, which fails to produce a significant detection signal (`z_{\text{soft}} = -1.07 \color{Red}{<} 4.13`, false negative).
+                    The middle panel demonstrates text generated using <i>SimMark</i> with Euclidean distance-based watermarking, producing a strong detection signal `(z_{\text{soft}} = 13.07 \color{ForestGreen}{>} 4.13)`.
+                    The bottom panel shows paraphrased watermarked text using GPT-3.5-Turbo, where the embedded watermark remains detectable despite semantic alterations `(z_{\text{soft}} = 11.99 \color{ForestGreen}{>} 4.13)`.
+                </figcaption>
+            </figure>
+        </div>
+      </div>
+  </section>
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      If you found this work helpful, please don't forget to cite our paper:
+      <pre></code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+<footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-justified">
+            Watermark icon adapted from  <a href="https://www.flaticon.com/free-icons/watermark" title="watermark icons">Freepik - Flaticon</a>.
+            <p>                
+                This website is adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                    Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
