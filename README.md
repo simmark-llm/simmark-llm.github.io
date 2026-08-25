@@ -14,7 +14,12 @@ If you find SimMark useful in your research, please cite:
 ```bibtex
 @inproceedings{dabiriaghdam-wang-2025-simmark,
     title = "{S}im{M}ark: A Robust Sentence-Level Similarity-Based Watermarking Algorithm for Large Language Models",
-    author = "Dabiriaghdam, Amirhossein and Wang, Lele",
+    author = "Dabiriaghdam, Amirhossein  and
+      Wang, Lele",
+    editor = "Christodoulopoulos, Christos  and
+      Chakraborty, Tanmoy  and
+      Rose, Carolyn  and
+      Peng, Violet",
     booktitle = "Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing",
     month = nov,
     year = "2025",
@@ -22,5 +27,6 @@ If you find SimMark useful in your research, please cite:
     publisher = "Association for Computational Linguistics",
     url = "https://aclanthology.org/2025.emnlp-main.1567/",
     doi = "10.18653/v1/2025.emnlp-main.1567",
-    pages = "30785--30806"
+    pages = "30785--30806",
+    ISBN = "979-8-89176-332-6"
 }
