@@ -5,6 +5,7 @@ This is the official website for <a href="https://arxiv.org/abs/2502.02787">_Sim
 - 🌐 **Project Website:** https://simmark-llm.github.io/
 - 📄 **Paper:** https://aclanthology.org/2025.emnlp-main.1567/
 - 📄 **arXiv:** https://arxiv.org/abs/2502.02787
+- Code Repository: https://github.com/DabiriAghdam/SimMark
 
 ## Citation
 
